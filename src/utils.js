@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const lunr = require('lunr')
-const minimatch = require('minimatch')
+const { minimatch } = require('minimatch')
 
 /**
  * Based on code from https://github.com/cmfcmf/docusaurus-search-local/
