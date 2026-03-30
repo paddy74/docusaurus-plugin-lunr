@@ -8,7 +8,11 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "test": "mocha '**/__tests__/**/*.spec.js'"
+    "test": "mocha '**/__tests__/**/*.spec.js'",
+    "format": "pnpm exec prettier . --write --config ../.prettierrc --ignore-path ../.prettierignore",
+    "init": "npm install --global corepack@latest && corepack enable pnpm && corepack prepare pnpm@latest-10 --activate && pnpm install",
+    "update-deps": "corepack use pnpm@latest && pnpm install && pnpm update --latest && pnpm audit --fix && pnpm install && pnpm dedupe",
+    "clean-install": "pnpm store prune && rm -rf node_modules pnpm-lock.yaml && pnpm install"
   },
   "homepage": "https://github.com/paddy74/docusaurus-plugin-lunr/blob/latest/README.md",
   "repository": {
@@ -74,6 +78,6 @@
     "react-dom": "^16.8.4 || ^17 || ^18 || ^19"
   },
   "engines": {
-    "node": ">= 8.10.0"
+    "node": ">= 24.14.0"
   }
 }
