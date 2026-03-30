@@ -1,10 +1,3 @@
-/*
-Aloglia DocSearch Adapter for Lunr.js
-====================================
-Written by:  Praveen N
-github: praveenn77
-*/
-
 import lunr from "@generated/lunr.client";
 lunr.tokenizer.separator = /[\s\-/]+/;
 
@@ -138,35 +131,40 @@ class LunrSearchAdapter {
     return this.getHit(doc, null, preview);
   }
   search(input) {
-    return new Promise((resolve, rej) => {
-      const results = this.getLunrResult(input);
-      const hits = [];
-      results.length > this.maxHits && (results.length = this.maxHits);
-      this.titleHitsRes = [];
-      this.contentHitsRes = [];
-      results.forEach((result) => {
-        const doc = this.searchDocs[result.ref];
-        const { metadata } = result.matchData;
-        for (let i in metadata) {
-          if (metadata[i].title) {
-            if (!this.titleHitsRes.includes(result.ref)) {
-              const position = metadata[i].title.position[0];
-              hits.push(this.getTitleHit(doc, position, input.length));
-              this.titleHitsRes.push(result.ref);
-            }
-          } else if (metadata[i].content) {
-            const position = metadata[i].content.position[0];
-            hits.push(this.getContentHit(doc, position));
-          } else if (metadata[i].keywords) {
-            const position = metadata[i].keywords.position[0];
-            hits.push(this.getKeywordHit(doc, position, input.length));
-            this.titleHitsRes.push(result.ref);
+    const results = this.getLunrResult(input);
+    const hits = [];
+    const titleHits = new Set();
+
+    if (results.length > this.maxHits) {
+      results.length = this.maxHits;
+    }
+
+    results.forEach((result) => {
+      const doc = this.searchDocs[result.ref];
+      const { metadata } = result.matchData;
+      for (const key of Object.keys(metadata)) {
+        if (metadata[key].title) {
+          if (!titleHits.has(result.ref)) {
+            const position = metadata[key].title.position[0];
+            hits.push(this.getTitleHit(doc, position, input.length));
+            titleHits.add(result.ref);
           }
+        } else if (metadata[key].content) {
+          const position = metadata[key].content.position[0];
+          hits.push(this.getContentHit(doc, position));
+        } else if (metadata[key].keywords) {
+          const position = metadata[key].keywords.position[0];
+          hits.push(this.getKeywordHit(doc, position, input.length));
+          titleHits.add(result.ref);
         }
-      });
-      hits.length > this.maxHits && (hits.length = this.maxHits);
-      resolve(hits);
+      }
     });
+
+    if (hits.length > this.maxHits) {
+      hits.length = this.maxHits;
+    }
+
+    return Promise.resolve(hits);
   }
 }
 

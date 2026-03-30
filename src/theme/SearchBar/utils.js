@@ -263,6 +263,9 @@ const utils = {
    * @return {object}
    */
   deepClone(object) {
+    if (typeof structuredClone === "function") {
+      return structuredClone(object);
+    }
     return JSON.parse(JSON.stringify(object));
   },
 };

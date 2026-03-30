@@ -2,7 +2,11 @@
   "name": "docusaurus-plugin-lunr",
   "version": "3.6.0",
   "description": "Offline search component for Docusaurus V3",
+  "type": "commonjs",
   "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
@@ -78,6 +82,6 @@
     "react-dom": "^16.8.4 || ^17 || ^18 || ^19"
   },
   "engines": {
-    "node": ">= 24.14.0"
+    "node": ">= 22.0.0"
   }
 }

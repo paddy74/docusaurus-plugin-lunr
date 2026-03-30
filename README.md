@@ -1,4 +1,3 @@
-
 # docusaurus-plugin-lunr
 
 Offline Search for Docusaurus V2 or V3
@@ -15,14 +14,18 @@ Offline Search for Docusaurus V2 or V3
 
 ```html
 <p align="center">
-<img width="548" alt="image" src="https://github.com/paddy74/docusaurus-plugin-lunr/assets/20218070/dbc54b61-077f-4e11-af27-8798cae8a572.gif">
+  <img
+    width="548"
+    alt="image"
+    src="https://github.com/paddy74/docusaurus-plugin-lunr/assets/20218070/dbc54b61-077f-4e11-af27-8798cae8a572.gif"
+  />
 </p>
 ```
 
 ## Prerequisites
 
 - Docusaurus V2 or V3
-- Node.js >= 12.X
+- Node.js >= 22.0.0
 
 ## How to Use ?
 
@@ -51,8 +54,8 @@ npm i lunr --save
 ```javascript
 module.exports = {
   // ...
-    plugins: [require.resolve('docusaurus-plugin-lunr')],
-}
+  plugins: [require.resolve("docusaurus-plugin-lunr")],
+};
 ```
 
 1. Then build your Docusaurus project
@@ -86,29 +89,34 @@ Note: Docusaurus search information can only be generated from a production buil
 ```javascript
 module.exports = {
   // ...
-    plugins: [[ require.resolve('docusaurus-plugin-lunr'), {
-      languages: ['en', 'de'] // language codes
-    }]],
-}
+  plugins: [
+    [
+      require.resolve("docusaurus-plugin-lunr"),
+      {
+        languages: ["en", "de"], // language codes
+      },
+    ],
+  ],
+};
 ```
 
 Supports all the language listed here <https://github.com/MihaiValentin/lunr-languages>
 
 ## Options available
 
-| Option              | Type      | Default  | Description                                                                                                               |
-| ------------------- | --------- | -------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `languages`         | `Array`   | `['en']` | Language codes to use for stemming, Supports all the language listed here <https://github.com/MihaiValentin/lunr-languages> |
-| `indexBaseUrl`      | `Boolean` | `false`  | Base url will not indexed by default, if you want to index the base url set this option to `true`                         |
-| `excludeRoutes`     | `Array`   | `[]`     | Exclude certain routes from the search                                                                                    |
-| `includeRoutes`     | `Array`   | `[]`     | Include only specific routes for search                                                                                   |
-| `stopWords`         | `Array`   | `[]`     | Add stop words(words that are exclude from search result) to the search index                                             |
-| `excludeTags`       | `Array`   | `[]`     | Exclude certain tags from the search
-| `highlightResult`   | `Boolean` | `false`  | Enable it to highlight the searched word in the result page. Used `mark.js` for highlighting. <br /> You can customize the highlight color using CSS <br /> ```mark  { background-color: red !important; color: green !important }```                                                                                |
-| `disableVersioning` | `Boolean` | `false`  | Docs versions are displayed by default. If you want to hide it, set this plugin option to `true`                          |
-| `assetUrl`     | `string`   | `\`     | Url from which the generated search doc files to be loaded, check [issue #122](https://github.com/praveenn77/docusaurus-plugin-lunr/issues/122) |
-| `maxHits`           | `string`  | `5`      | Maximum number of hits shown |
-| `fields`            | `object`  | `{}`      | Lunr field definitions, allows "boosting" priority for different sources of keywords (e.g. title, content, keywords) |
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `languages` | `Array` | `['en']` | Language codes to use for stemming, Supports all the language listed here <https://github.com/MihaiValentin/lunr-languages> |
+| `indexBaseUrl` | `Boolean` | `false` | Base url will not indexed by default, if you want to index the base url set this option to `true` |
+| `excludeRoutes` | `Array` | `[]` | Exclude certain routes from the search |
+| `includeRoutes` | `Array` | `[]` | Include only specific routes for search |
+| `stopWords` | `Array` | `[]` | Add stop words(words that are exclude from search result) to the search index |
+| `excludeTags` | `Array` | `[]` | Exclude certain tags from the search |
+| `highlightResult` | `Boolean` | `false` | Enable it to highlight the searched word in the result page. Used `mark.js` for highlighting. <br /> You can customize the highlight color using CSS <br /> `mark  { background-color: red !important; color: green !important }` |
+| `disableVersioning` | `Boolean` | `false` | Docs versions are displayed by default. If you want to hide it, set this plugin option to `true` |
+| `assetUrl` | `string` | `\` | Url from which the generated search doc files to be loaded, check [issue #122](https://github.com/praveenn77/docusaurus-plugin-lunr/issues/122) |
+| `maxHits` | `string` | `5` | Maximum number of hits shown |
+| `fields` | `object` | `{}` | Lunr field definitions, allows "boosting" priority for different sources of keywords (e.g. title, content, keywords) |
 
 ### Options to configure Lunr fields
 

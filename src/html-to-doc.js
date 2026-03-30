@@ -1,17 +1,16 @@
-const { parentPort, workerData } = require("worker_threads");
+const { parentPort, workerData } = require("node:worker_threads");
 
 // unified imports
-const unified = require("unified");
-const parse = require("rehype-parse");
-const select = require("hast-util-select").select;
-const selectAll = require("hast-util-select").selectAll;
-const toText = require("hast-util-to-text");
-const is = require("unist-util-is");
-const toVfile = require("to-vfile");
+const { unified } = require("unified");
+const { default: rehypeParse } = require("rehype-parse");
+const { select, selectAll } = require("hast-util-select");
+const { toText } = require("hast-util-to-text");
+const { is } = require("unist-util-is");
+const toVFile = require("to-vfile");
 
 function findArticleWithMarkdown(articles) {
   for (let i = 0; i < articles.length; i++) {
-    markdown = select(".markdown", articles[i]);
+    const markdown = select(".markdown", articles[i]);
     if (markdown) {
       return [markdown, articles[i]];
     }
@@ -23,7 +22,7 @@ function findArticleWithMarkdown(articles) {
 function* scanDocuments({ path, url }) {
   let vfile;
   try {
-    vfile = toVfile.readSync(path);
+    vfile = toVFile.readSync(path);
   } catch (e) {
     if (e.code !== "ENOENT") {
       console.error(`docusaurus-plugin-lunr:: unable to read file ${path}`);
@@ -32,10 +31,10 @@ function* scanDocuments({ path, url }) {
     return;
   }
 
-  const hast = unified().use(parse, { emitParseErrors: false }).parse(vfile);
+  const hast = unified().use(rehypeParse, { emitParseErrors: false }).parse(vfile);
 
   const articles = selectAll("article", hast);
-  if (!articles) {
+  if (!articles.length) {
     return;
   }
 
@@ -53,8 +52,9 @@ function* scanDocuments({ path, url }) {
 
   const keywords = selectAll('meta[name="keywords"]', hast)
     .reduce((acc, metaNode) => {
-      if (metaNode.properties.content) {
-        return acc.concat(metaNode.properties.content.replace(/,/g, " "));
+      const content = metaNode.properties?.content;
+      if (typeof content === "string" && content) {
+        return acc.concat(content.replaceAll(",", " "));
       }
       return acc;
     }, [])
@@ -143,6 +143,9 @@ function getSectionHeaders(element) {
 }
 
 function processFile(file) {
+  if (!parentPort) {
+    return;
+  }
   let scanned = 0;
   for (const doc of scanDocuments(file)) {
     scanned = 1;
@@ -151,10 +154,12 @@ function processFile(file) {
   parentPort.postMessage([null, scanned]);
 }
 
-parentPort.on("message", (maybeFile) => {
-  if (maybeFile) {
-    processFile(maybeFile);
-  } else {
-    parentPort.close();
-  }
-});
+if (parentPort) {
+  parentPort.on("message", (maybeFile) => {
+    if (maybeFile) {
+      processFile(maybeFile);
+    } else {
+      parentPort.close();
+    }
+  });
+}
