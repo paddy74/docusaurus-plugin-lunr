@@ -1,5 +1,5 @@
 {
-  "name": "docusaurus-lunr-search",
+  "name": "docusaurus-plugin-lunr",
   "version": "3.6.0",
   "description": "Offline search component for Docusaurus V3",
   "main": "src/index.js",
@@ -10,9 +10,9 @@
   "scripts": {
     "test": "mocha '**/__tests__/**/*.spec.js'"
   },
-  "homepage": "https://github.com/lelouch77/docusaurus-lunr-search/blob/master/README.md",
+  "homepage": "https://github.com/paddy74/docusaurus-plugin-lunr/blob/latest/README.md",
   "repository": {
-    "url": "https://github.com/lelouch77/docusaurus-lunr-search/"
+    "url": "https://github.com/paddy74/docusaurus-plugin-lunr/"
   },
   "author": {
     "name": "Praveen N",
@@ -64,7 +64,9 @@
     "unist-util-is": "^6.0.1"
   },
   "devDependencies": {
-    "mocha": "^11.3.0"
+    "@j178/prek": "^0.3.8",
+    "mocha": "^11.3.0",
+    "prettier": "^3.8.1"
   },
   "peerDependencies": {
     "@docusaurus/core": "^2.0.0-alpha.60 || ^2.0.0 || ^3.0.0",
