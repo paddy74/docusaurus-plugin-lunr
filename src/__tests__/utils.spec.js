@@ -1,6 +1,5 @@
-const assert = require("assert");
-const path = require("path");
-const utils = require("../utils");
+import assert from "node:assert/strict";
+import { getFilePaths } from "../utils.js";
 
 const outDir = "/out";
 const baseUrl = "http://example.com/";
@@ -17,7 +16,7 @@ describe("utils", () => {
       `${baseUrl}docs/changelogs/rovers/lunar`,
     ];
 
-    const [files, meta] = utils.getFilePaths(routesPaths, outDir, baseUrl, {
+    const [files, meta] = getFilePaths(routesPaths, outDir, baseUrl, {
       excludeRoutes: ["docs/changelogs/**/*"],
     });
 

@@ -1,12 +1,10 @@
-const { parentPort, workerData } = require("node:worker_threads");
-
-// unified imports
-const { unified } = require("unified");
-const { default: rehypeParse } = require("rehype-parse");
-const { select, selectAll } = require("hast-util-select");
-const { toText } = require("hast-util-to-text");
-const { is } = require("unist-util-is");
-const toVFile = require("to-vfile");
+import { parentPort, workerData } from "node:worker_threads";
+import { unified } from "unified";
+import rehypeParse from "rehype-parse";
+import { select, selectAll } from "hast-util-select";
+import { toText } from "hast-util-to-text";
+import { is } from "unist-util-is";
+import { readSync } from "to-vfile";
 
 function findArticleWithMarkdown(articles) {
   for (let i = 0; i < articles.length; i++) {
@@ -22,7 +20,7 @@ function findArticleWithMarkdown(articles) {
 function* scanDocuments({ path, url }) {
   let vfile;
   try {
-    vfile = toVFile.readSync(path);
+    vfile = readSync(path);
   } catch (e) {
     if (e.code !== "ENOENT") {
       console.error(`docusaurus-plugin-lunr:: unable to read file ${path}`);

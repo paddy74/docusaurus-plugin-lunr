@@ -2,7 +2,7 @@
   "name": "docusaurus-plugin-lunr",
   "version": "3.6.0",
   "description": "Offline search component for Docusaurus V3",
-  "type": "commonjs",
+  "type": "module",
   "main": "src/index.js",
   "exports": {
     ".": "./src/index.js"

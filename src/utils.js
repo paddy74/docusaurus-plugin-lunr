@@ -1,13 +1,16 @@
-const fs = require("node:fs");
-const path = require("node:path");
-const lunr = require("lunr");
-const { minimatch } = require("minimatch");
+import fs from "node:fs";
+import path from "node:path";
+import { createRequire } from "node:module";
+import lunr from "lunr";
+import { minimatch } from "minimatch";
+
+const require = createRequire(import.meta.url);
 
 /**
  * Based on code from https://github.com/cmfcmf/docusaurus-search-local/
  * by Christian Flach, licensed under the MIT license.
  */
-function generateLunrClientJS(outDir, language = "en") {
+export function generateLunrClientJS(outDir, language = "en") {
   let normalizedLanguage = language;
   if (Array.isArray(normalizedLanguage) && normalizedLanguage.length === 1) {
     [normalizedLanguage] = normalizedLanguage;
@@ -35,13 +38,13 @@ function generateLunrClientJS(outDir, language = "en") {
       }
 
       require("lunr-languages/lunr.multi")(lunr);
-      lunrClient += `require("lunr-languages/lunr.multi")(lunr);\n`;
+      lunrClient += 'require("lunr-languages/lunr.multi")(lunr);\n';
     } else {
       require(`lunr-languages/lunr.${normalizedLanguage}`)(lunr);
       lunrClient += `require("lunr-languages/lunr.${normalizedLanguage}")(lunr);\n`;
     }
   }
-  lunrClient += `export default lunr;\n`;
+  lunrClient += "export default lunr;\n";
 
   const lunrClientPath = path.join(outDir, "lunr.client.js");
   fs.writeFileSync(lunrClientPath, lunrClient);
@@ -55,7 +58,7 @@ function generateLunrClientJS(outDir, language = "en") {
   return null;
 }
 
-function getFilePaths(routesPaths, outDir, baseUrl, options = {}) {
+export function getFilePaths(routesPaths, outDir, baseUrl, options = {}) {
   const files = [];
   const addedFiles = new Set();
   const { excludeRoutes = [], includeRoutes = [], indexBaseUrl = false } = options;
@@ -71,10 +74,10 @@ function getFilePaths(routesPaths, outDir, baseUrl, options = {}) {
     if (isBaseUrl && !indexBaseUrl) continue;
 
     const relativePath = route.replace(baseUrl, "");
-    const candidatePaths = [route, relativePath].flatMap((route) => {
+    const candidatePaths = [route, relativePath].flatMap((routeItem) => {
       return [
-        path.join(outDir, `${route}.html`),
-        path.join(outDir, route, "index.html"),
+        path.join(outDir, `${routeItem}.html`),
+        path.join(outDir, routeItem, "index.html"),
       ];
     });
 
@@ -119,8 +122,3 @@ function getFilePaths(routesPaths, outDir, baseUrl, options = {}) {
   }
   return [files, meta];
 }
-
-module.exports = {
-  generateLunrClientJS,
-  getFilePaths,
-};

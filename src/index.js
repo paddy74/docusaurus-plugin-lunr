@@ -1,15 +1,15 @@
-const { writeFile } = require("node:fs/promises");
-const { availableParallelism } = require("node:os");
-const path = require("node:path");
-const lunr = require("lunr");
-const { Worker } = require("node:worker_threads");
-const Gauge = require("gauge");
+import { writeFile } from "node:fs/promises";
+import { availableParallelism } from "node:os";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import lunr from "lunr";
+import { Worker } from "node:worker_threads";
+import Gauge from "gauge";
 
-// local imports
-const utils = require("./utils");
+import { generateLunrClientJS, getFilePaths } from "./utils.js";
 
-module.exports = function (_context, options = {}) {
-  let languages = undefined;
+export default function docusaurusPluginLunr(_context, options = {}) {
+  let languages;
 
   const guid = String(Date.now());
   const fileNames = {
@@ -20,7 +20,7 @@ module.exports = function (_context, options = {}) {
   return {
     name: "docusaurus-plugin-lunr",
     getThemePath() {
-      return path.resolve(__dirname, "./theme");
+      return fileURLToPath(new URL("./theme", import.meta.url));
     },
     configureWebpack(config) {
       // Docusaurus invokes configureWebpack() twice, for client and server; however generateLunrClientJS()
@@ -28,7 +28,7 @@ module.exports = function (_context, options = {}) {
       if (languages === undefined) {
         // Multilingual issue fix
         const generatedFilesDir = config.resolve.alias["@generated"];
-        languages = utils.generateLunrClientJS(generatedFilesDir, options.languages);
+        languages = generateLunrClientJS(generatedFilesDir, options.languages);
       }
       return {};
     },
@@ -43,7 +43,7 @@ module.exports = function (_context, options = {}) {
         (plugin) => plugin.name === "docusaurus-plugin-content-docs",
       );
 
-      const [files, meta] = utils.getFilePaths(routesPaths, outDir, baseUrl, options);
+      const [files, meta] = getFilePaths(routesPaths, outDir, baseUrl, options);
       if (meta.excludedCount) {
         console.log(
           `docusaurus-plugin-lunr:: ${meta.excludedCount} documents were excluded from the search by excludeRoutes config`,
@@ -135,7 +135,7 @@ module.exports = function (_context, options = {}) {
       console.log("docusaurus-plugin-lunr:: End of process");
     },
   };
-};
+}
 
 function buildSearchData(files, addToSearchData, loadedVersions) {
   if (!files.length) {
@@ -188,7 +188,7 @@ function buildSearchData(files, addToSearchData, loadedVersions) {
   };
 
   for (let i = 0; i < workerCount; i++) {
-    const worker = new Worker(path.join(__dirname, "html-to-doc.js"), {
+    const worker = new Worker(new URL("./html-to-doc.js", import.meta.url), {
       workerData: { loadedVersions },
     });
 
