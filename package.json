@@ -34,6 +34,10 @@
     {
       "name": "Ris Adams",
       "url": "https://github.com/risadams"
+    },
+    {
+      "name": "Patrick Young",
+      "url": "https://github.com/paddy74"
     }
   ],
   "keywords": [
@@ -42,7 +46,7 @@
     "offline-search",
     "documentation"
   ],
-  "license": "MIT",
+  "license": "GPL3",
   "dependencies": {
     "@algolia/autocomplete-js": "^1.19.7",
     "clsx": "^2.1.1",

@@ -4,7 +4,9 @@ Offline Search for Docusaurus V2 or V3
 
 [Demo Website](https://praveenn77.github.io/docusaurus-lunr-search-demo/)
 
- [![MIT Licence](https://img.shields.io/github/license/lelouch77/docusaurus-lunr-search)](#)
+[![MIT Licence](https://img.shields.io/github/license/lelouch77/docusaurus-lunr-search)](#)
+
+[![GPL3 Licence](https://img.shields.io/github/license/paddy74/docusaurus-plugin-lunr)](#)
 
 [![npm version](https://badge.fury.io/js/docusaurus-lunr-search.svg)](https://www.npmjs.com/package/docusaurus-lunr-search)
 
