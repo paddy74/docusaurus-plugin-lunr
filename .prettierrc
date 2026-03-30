@@ -1,1 +1,4 @@
-{ "singleQuote": true, "semi": false, "trailingComma": "none" }
+{
+  "printWidth": 88,
+  "proseWrap": "never"
+}

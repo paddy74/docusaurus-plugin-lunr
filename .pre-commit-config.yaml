@@ -1,0 +1,37 @@
+exclude: '\.svg$'
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        exclude: (^|/)(pnpm-lock\.yaml|package-lock\.json|yarn\.lock)$
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+
+  - repo: https://gitlab.com/bmares/check-json5
+    rev: v1.0.0
+    hooks:
+      - id: check-json5
+
+  # Handle undesirable unicode characters
+  - repo: https://github.com/sirosen/texthooks
+    rev: "0.7.1"
+    hooks:
+      - id: alphabetize-codeowners
+      - id: fix-smartquotes
+      - id: fix-spaces
+      - id: fix-ligatures
+      - id: forbid-bidi-controls
+
+  # Prettier
+  - repo: local
+    hooks:
+      - id: prettier-shell
+        name: prettier-shell
+        entry: scripts/prettier_hook.sh
+        language: script

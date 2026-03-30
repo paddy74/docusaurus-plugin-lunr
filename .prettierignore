@@ -1,0 +1,10 @@
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+**/pnpm-lock.yaml
+**/build/**
+website/.docusaurus
+
+.svg
+*.svg
