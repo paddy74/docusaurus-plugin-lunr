@@ -1,0 +1,32 @@
+name: pnpm-init
+description: "Initialize a job for Node.js with pnpm"
+
+inputs:
+  node-version:
+    description: "Version of Node.js"
+    required: true
+    default: "24"
+  site-directory:
+    description: "Working directory for the package manager"
+    required: true
+    default: "./website"
+
+runs:
+  using: composite
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10
+
+    - name: Use Node.js ${{ inputs.site-directory }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: "pnpm"
+        cache-dependency-path: ${{ inputs.site-directory }}/pnpm-lock.yaml
+
+    - name: Install dependencies
+      working-directory: ${{ inputs.site-directory }}
+      run: pnpm install
+      shell: bash

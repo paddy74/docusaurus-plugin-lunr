@@ -1,0 +1,14 @@
+on:
+  pull_request:
+  push:
+    branches: ["dev"]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/pnpm-init
+      - uses: j178/prek-action@v1

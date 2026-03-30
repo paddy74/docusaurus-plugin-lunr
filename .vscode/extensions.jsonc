@@ -1,0 +1,25 @@
+{
+  "recommendations": [
+    // TypeScript
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+
+    // Markdown
+    "yzhang.markdown-all-in-one", // editor utilities, formtter
+    "DavidAnson.vscode-markdownlint", // linter
+    "bierner.markdown-checkbox",
+    "bierner.markdown-footnotes",
+    "bierner.markdown-mermaid",
+    "bierner.markdown-yaml-preamble",
+    "unifiedjs.vscode-mdx",
+
+    // Writing utils
+    "streetsidesoftware.code-spell-checker",
+    "ms-vscode.wordcount",
+
+    // Other
+    "hediet.vscode-drawio",
+    "nhoizey.gremlins",
+  ],
+}

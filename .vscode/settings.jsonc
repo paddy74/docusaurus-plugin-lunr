@@ -1,0 +1,37 @@
+{
+  // Markdown
+  "[markdown]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one",
+    "editor.codeActionsOnSave": { "source.fixAll.markdownlint": true },
+  },
+  "markdown.validate.enabled": true,
+  "markdown.updateLinksOnFileMove.enabled": "always",
+  "markdown.extension.toc.levels": "2..4",
+  "markdown.extension.toc.updateOnSave": true,
+
+  "markdownlint.config": {
+    "MD028": false,
+    "MD025": { "front_matter_title": "" },
+  },
+
+  // Markdown MDX
+  "mdx.server.enable": true,
+  "files.associations": {
+    "*.mdx": "mdx",
+  },
+  "[mdx]": {
+    "editor.defaultFormatter": "unifiedjs.vscode-mdx",
+  },
+
+  // code-spell-checker
+  "cSpell.diagnosticLevel": "Hint",
+  "cSpell.ignorePaths": [
+    ".vscode",
+    "package-lock.json",
+    "node_modules",
+    "build",
+    "**/*.pdf",
+  ],
+  "cSpell.words": ["youngweb"],
+}
