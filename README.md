@@ -132,7 +132,9 @@ docusaurus-plugin-lunr sets the default value for fields to:
 }
 ```
 
-## Indexing non-direct children headings of `.markdown`
+## Troubleshooting
+
+### Indexing non-direct children headings of `.markdown`
 
 By default, this library will only search for headings that are **direct children** of the `.markdown` element.
 
@@ -142,22 +144,39 @@ The `data-search-children` attribute will cause this library to look for all hea
 
 Check this [issue #115](https://github.com/praveenn77/docusaurus-plugin-lunr/issues/115) for more details.
 
-## Upgrading from docusaurus V2 to V3
+## Developer Guide
 
-Update the `docusaurus-plugin-lunr` version to `3.3.0` or higher in `package.json` file
+- **Package Manager**: [`pnpm`](https://pnpm.io/)
+- **Linter**:
+  - TypeScript: [ESLint](https://eslint.org/)
+  - CSS: [Stylelint](https://stylelint.io/)
+  - Markdown: [markdownlint](https://github.com/DavidAnson/vscode-markdownlint/)
+- **Code Formatter**:
+  - [Prettier](https://prettier.io/)
+  - Markdown: [Markdown All in One](yzhang.markdown-all-in-one)
+- **Pre-Commit Hooks**: [prek](https://prek.j178.dev/)
 
-Remove `src/theme/SearchBar` folder if you swizzled it before, if the folder does not exist then ignore this step.
+### Key Development Principles
 
-Do `yarn install` or `npm install`
+<!-- add additional principles (keep minimal) -->
 
-If npm install fails to install with error `unable to resolve dependency tree`, run `npm i --legacy-peer-deps`
+- Maintain 100% passing tests, at least 80% test coverage, formatting, and linting before opening a pull request.
+- Update docstrings alongside code changes to keep the generated reference accurate.
+
+## Contributing
+
+Contributions are welcome -- where appropriate for correcting things like spelling errors, bugs, or suboptimal code/configurations. To get started:
+
+1. Fork the repository and create a new branch.
+2. Install development dependencies (see the [developer guide](#developer-guide)).
+3. Add or update tests together with your change.
+4. Run the full test, linting, and formatting suite locally.
+5. Submit a pull request describing your changes and referencing any relevant issues.
+
+For major changes, open an issue first to discuss your proposal.
 
 ## Credits
 
 Thanks to [`algolia/docsearch.js`](https://github.com/algolia/docsearch), I modified it to create this search component
 
 And thanks [cmfcmf](https://github.com/cmfcmf), I used the code from his library [docusaurus-search-local](https://github.com/cmfcmf/docusaurus-search-local) for multi-language support.
-
-## Changelog
-
-Checkout the [releases](https://github.com/lelouch77/docusaurus-plugin-lunr/releases) page for changelog.
