@@ -1,7 +1,7 @@
 import autocomplete from "autocomplete.js";
 import $ from "autocomplete.js/zepto";
 import Hogan from "hogan.js";
-import LunrSearchAdapter from "./lunar-search";
+import LunrSearchAdapter from "./LunrSearchAdapter";
 import templates from "./templates";
 import utils from "./utils";
 

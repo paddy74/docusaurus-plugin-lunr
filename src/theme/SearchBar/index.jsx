@@ -5,6 +5,7 @@ import useIsBrowser from "@docusaurus/useIsBrowser";
 import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HighlightSearchResults } from "./HighlightSearchResults";
+
 const Search = (props) => {
   const initialized = useRef(false);
   const searchBarRef = useRef(null);
