@@ -7,11 +7,19 @@
   "exports": {
     ".": "./src/index.js"
   },
+  "files": [
+    "src/*.js",
+    "src/theme",
+    "README.md",
+    "LICENSE-GPL3",
+    "LICENSE-MIT"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
+    "build": "pnpm pack --dry-run",
     "test": "mocha '**/__tests__/**/*.spec.js'",
     "format": "pnpm exec prettier . --write --config ../.prettierrc --ignore-path ../.prettierignore",
     "init": "npm install --global corepack@latest && corepack enable pnpm && corepack prepare pnpm@latest-10 --activate && pnpm install",
