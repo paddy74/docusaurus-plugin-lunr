@@ -1,9 +1,9 @@
 import autocomplete from "autocomplete.js";
-import $ from "autocomplete.js/zepto";
+import $ from "autocomplete.js/zepto.js";
 import Hogan from "hogan.js";
-import LunrSearchAdapter from "./LunrSearchAdapter";
-import templates from "./templates";
-import utils from "./utils";
+import LunrSearchAdapter from "./LunrSearchAdapter.js";
+import templates from "./templates.js";
+import utils from "./utils.js";
 
 class DocSearch {
   constructor({

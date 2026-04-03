@@ -5,7 +5,9 @@
   "type": "module",
   "main": "src/index.js",
   "exports": {
-    ".": "./src/index.js"
+    ".": "./src/index.js",
+    "./lunr.client": "./src/lunr.client.js",
+    "./src/theme/SearchBar": "./src/theme/SearchBar/index.jsx"
   },
   "files": [
     "src/*.js",
@@ -64,7 +66,7 @@
   ],
   "license": "GPL3",
   "dependencies": {
-    "@algolia/autocomplete-js": "^1.19.7",
+    "autocomplete.js": "^0.38.1",
     "clsx": "^2.1.1",
     "gauge": "^5.0.2",
     "hast-util-select": "^6.0.4",

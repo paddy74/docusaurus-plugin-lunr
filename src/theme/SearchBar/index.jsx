@@ -4,7 +4,7 @@ import { usePluginData } from "@docusaurus/useGlobalData";
 import useIsBrowser from "@docusaurus/useIsBrowser";
 import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { HighlightSearchResults } from "./HighlightSearchResults";
+import { HighlightSearchResults } from "./HighlightSearchResults.jsx";
 
 const Search = (props) => {
   const initialized = useRef(false);
@@ -85,7 +85,7 @@ const Search = (props) => {
       Promise.all([
         getSearchDoc(),
         getLunrIndex(),
-        import("./DocSearch"),
+        import("./DocSearch.js"),
         import("./algolia.css"),
       ]).then(([searchDocFile, searchIndex, { default: DocSearch }]) => {
         const { searchDocs, options } = searchDocFile;
