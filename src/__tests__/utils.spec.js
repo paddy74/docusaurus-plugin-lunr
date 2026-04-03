@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
-import { getFilePaths } from "../utils.js";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { generateLunrClientJS, getFilePaths } from "../utils.js";
 
 const outDir = "/out";
 const baseUrl = "http://example.com/";
@@ -32,5 +35,25 @@ describe("utils", () => {
     );
 
     assert.equal(meta.excludedCount, 2);
+  });
+
+  it("should generate a client that imports lunr from the package export", async () => {
+    const outDir = await mkdtemp(path.join(tmpdir(), "lunr-client-"));
+
+    try {
+      generateLunrClientJS(outDir);
+
+      const generatedClient = await readFile(
+        path.join(outDir, "lunr.client.js"),
+        "utf8",
+      );
+
+      assert.match(
+        generatedClient,
+        /import lunr from "docusaurus-plugin-lunr\/lunr\.client";/,
+      );
+    } finally {
+      await rm(outDir, { recursive: true, force: true });
+    }
   });
 });
