@@ -1,0 +1,22 @@
+allowBuilds:
+  core-js: false
+  core-js-pure: true
+
+minimumReleaseAgeExclude:
+  - got@11.8.5
+  - trim@0.0.3
+  - axios@0.28.0
+  - webpack-dev-server@5.2.1
+  - axios@0.30.0
+  - diff@8.0.3
+  - serialize-javascript@7.0.3
+  - serialize-javascript@7.0.5
+  - lodash@4.17.24
+  - follow-redirects@1.15.12
+  - axios@0.31.0
+  - postcss@8.5.10
+  - axios@0.31.1
+  - axios@0.30.3
+  - fast-uri@3.1.1
+  - fast-uri@3.1.2
+  - "@babel/plugin-transform-modules-systemjs@7.29.4"

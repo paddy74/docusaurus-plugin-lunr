@@ -1,7 +1,7 @@
 {
   "name": "docusaurus-plugin-lunr",
-  "version": "3.6.0",
-  "description": "Offline search component for Docusaurus V3",
+  "version": "4.0.0",
+  "description": "Offline search component for Docusaurus v3.9.2+",
   "type": "module",
   "main": "src/index.js",
   "exports": {
@@ -22,10 +22,9 @@
   },
   "scripts": {
     "build": "pnpm pack --dry-run",
-    "test": "mocha '**/__tests__/**/*.spec.js'",
+    "test": "mocha 'src/__tests__/**/*.spec.js'",
     "format": "pnpm exec prettier . --write --config ../.prettierrc --ignore-path ../.prettierignore",
-    "init": "npm install --global corepack@latest && corepack enable pnpm && corepack prepare pnpm@latest-10 --activate && pnpm install",
-    "update-deps": "corepack use pnpm@latest && pnpm install && pnpm update --latest && pnpm audit --fix && pnpm install && pnpm dedupe",
+    "update-deps": "pnpm self-update && pnpm update --latest --recursive && pnpm audit --fix && pnpm install && pnpm dedupe",
     "clean-install": "pnpm store prune && rm -rf node_modules pnpm-lock.yaml && pnpm install"
   },
   "homepage": "https://github.com/paddy74/docusaurus-plugin-lunr/blob/latest/README.md",
@@ -73,23 +72,23 @@
     "hast-util-to-text": "^4.0.2",
     "hogan.js": "^3.0.2",
     "lunr": "^2.3.9",
-    "lunr-languages": "^1.14.0",
+    "lunr-languages": "^1.19.0",
     "mark.js": "^8.11.1",
-    "minimatch": "^10.2.4",
+    "minimatch": "^10.2.5",
     "rehype-parse": "^9.0.1",
     "to-vfile": "^8.0.0",
     "unified": "^11.0.5",
     "unist-util-is": "^6.0.1"
   },
   "devDependencies": {
-    "@j178/prek": "^0.3.8",
-    "mocha": "^11.3.0",
-    "prettier": "^3.8.1"
+    "@j178/prek": "^0.3.13",
+    "mocha": "^11.7.5",
+    "prettier": "^3.8.3"
   },
   "peerDependencies": {
-    "@docusaurus/core": "^2.0.0-alpha.60 || ^2.0.0 || ^3.0.0",
-    "react": "^16.8.4 || ^17 || ^18 || ^19",
-    "react-dom": "^16.8.4 || ^17 || ^18 || ^19"
+    "@docusaurus/core": "^3.9.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "engines": {
     "node": ">= 22.0.0"
