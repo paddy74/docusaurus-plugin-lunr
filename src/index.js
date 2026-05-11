@@ -1,10 +1,9 @@
+import lunr from "lunr";
 import { writeFile } from "node:fs/promises";
 import { availableParallelism } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import lunr from "lunr";
 import { Worker } from "node:worker_threads";
-import Gauge from "gauge";
 
 import { generateLunrClientJS, getFilePaths } from "./utils.js";
 
@@ -146,13 +145,19 @@ function buildSearchData(files, addToSearchData, loadedVersions) {
   console.log(
     `docusaurus-plugin-lunr:: Start scanning documents in ${workerCount} threads`,
   );
-  const gauge = new Gauge();
-  gauge.show("scanning documents...");
-  let indexedDocuments = 0; // Documents that have added at least one value to the index
+  const progressBar = new cliProgress.SingleBar({
+    format: "Scanning documents |{bar}| {percentage}% | {value}/{total} files",
+    barCompleteChar: "\u2588",
+    barIncompleteChar: "\u2591",
+    hideCursor: true,
+  });
+  progressBar.start(files.length, 0);
+  let indexedDocuments = 0; // docs that have added >=1 value to the index
 
   const { promise, resolve, reject } = Promise.withResolvers();
   let activeWorkersCount = 0;
   let nextIndex = 0;
+  let processedCount = 0;
   let completed = false;
 
   const finish = (finishFn, value) => {
@@ -160,7 +165,7 @@ function buildSearchData(files, addToSearchData, loadedVersions) {
       return;
     }
     completed = true;
-    gauge.hide();
+    progressBar.stop();
     finishFn(value);
   };
 
@@ -173,17 +178,14 @@ function buildSearchData(files, addToSearchData, loadedVersions) {
   };
 
   const handleMessage = ([isDoc, payload], worker) => {
-    gauge.pulse();
     if (isDoc) {
       addToSearchData(payload);
       return;
     }
 
     indexedDocuments += payload;
-    gauge.show(
-      `scanned ${nextIndex} files out of ${files.length}`,
-      nextIndex / files.length,
-    );
+    processedCount++;
+    progressBar.update(processedCount);
     dispatchNextFile(worker);
   };
 
@@ -210,7 +212,6 @@ function buildSearchData(files, addToSearchData, loadedVersions) {
 
     activeWorkersCount++;
     dispatchNextFile(worker);
-    gauge.pulse();
   }
 
   return promise;

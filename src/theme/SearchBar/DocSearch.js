@@ -1,6 +1,6 @@
 import autocomplete from "autocomplete.js";
 import $ from "autocomplete.js/zepto.js";
-import Hogan from "hogan.js";
+import Mustache from "mustache";
 import LunrSearchAdapter from "./LunrSearchAdapter.js";
 import templates from "./templates.js";
 import utils from "./utils.js";
@@ -158,7 +158,7 @@ class DocSearch {
   }
 
   // Given a list of hits returned by the API, will reformat them to be used in
-  // a Hogan template
+  // a Mustache template
   static formatHits(receivedHits) {
     const clonedHits = utils.deepClone(receivedHits);
     const hits = clonedHits.map((hit) => {
@@ -245,15 +245,14 @@ class DocSearch {
   }
 
   static getEmptyTemplate() {
-    return (args) => Hogan.compile(templates.empty).render(args);
+    return (args) => Mustache.render(templates.empty, args);
   }
 
   static getSuggestionTemplate(isSimpleLayout) {
     const stringTemplate = isSimpleLayout
       ? templates.suggestionSimple
       : templates.suggestion;
-    const template = Hogan.compile(stringTemplate);
-    return (suggestion) => template.render(suggestion);
+    return (suggestion) => Mustache.render(stringTemplate, suggestion);
   }
 
   handleSelected(input, event, suggestion, datasetNumber, context = {}) {
