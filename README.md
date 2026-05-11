@@ -1,6 +1,6 @@
 # docusaurus-plugin-lunr
 
-Offline Search for Docusaurus V3.9.2+
+Client-side (offline/local) search for Docusaurus V3.9.2+ using [Lunr.js](https://lunrjs.com/)
 
 <!-- [Demo Website](https://praveenn77.github.io/docusaurus-lunr-search-demo/) -->
 
