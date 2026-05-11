@@ -87,14 +87,23 @@ const Search = (props) => {
         getLunrIndex(),
         import("./DocSearch.js"),
         import("./algolia.css"),
-      ]).then(([searchDocFile, searchIndex, { default: DocSearch }]) => {
-        const { searchDocs, options } = searchDocFile;
-        if (!searchDocs || searchDocs.length === 0) {
-          return;
-        }
-        initAlgolia(searchDocs, searchIndex, DocSearch, options);
-        setIndexReady(true);
-      });
+      ])
+        .then(([searchDocFile, searchIndex, { default: DocSearch }]) => {
+          const { searchDocs, options } = searchDocFile;
+          if (!searchDocs || searchDocs.length === 0) {
+            if (process.env.NODE_ENV !== "production") {
+              console.debug(
+                "docusaurus-plugin-lunr: Search index not available in development mode. Use a production build to enable search.",
+              );
+            }
+            return;
+          }
+          initAlgolia(searchDocs, searchIndex, DocSearch, options);
+          setIndexReady(true);
+        })
+        .catch((err) => {
+          console.error("docusaurus-plugin-lunr: Failed to load search index", err);
+        });
       initialized.current = true;
     }
   };
@@ -141,7 +150,13 @@ const Search = (props) => {
       <input
         id="search_input_react"
         type="search"
-        placeholder={indexReady ? placeholder : "Loading..."}
+        placeholder={
+          indexReady
+            ? placeholder
+            : process.env.NODE_ENV === "production"
+              ? "Loading..."
+              : "Search (build for index)"
+        }
         aria-label="Search"
         className={clsx(
           "navbar__search-input",
